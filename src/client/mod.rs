@@ -117,7 +117,6 @@ impl<'a> ClientBuilder<'a> {
     }
 
     /// Construct a new builder to call methods on for the client construction.
-    /// The `token` will automatically be prefixed "Bot " if not already.
     ///
     /// **Panic**:
     /// If you have enabled the `framework`-feature (on by default), you must specify
@@ -142,13 +141,9 @@ impl<'a> ClientBuilder<'a> {
         c
     }
 
-    /// Sets a token for the bot. If the token is not prefixed "Bot ",
     /// this method will automatically do so.
     pub fn token(mut self, token: impl AsRef<str>) -> Self {
-        let token = token.as_ref().trim();
-
-        let token =
-            if token.starts_with("Bot ") { token.to_string() } else { format!("Bot {}", token) };
+        let token = token.as_ref().trim().to_string();
 
         self.token = Some(token.clone());
 
